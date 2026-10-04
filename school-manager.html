@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>مدیریت مدرسه</title>
+<style>
+:root{--g:#0f5c4d;--g2:#e3efec;--y:#e0a526;--bg:#f3f5f4;--t:#1b2a27;--m:#66756f;--r:#b3261e;--c:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,"Noto Naskh Arabic",sans-serif;background:var(--bg);color:var(--t);font-size:15px}
+button,input,select{font:inherit}button{cursor:pointer}
+.shell{min-height:100vh}.sb{position:fixed;top:0;bottom:0;right:0;width:250px;background:var(--g);color:#fff;padding:12px 8px;overflow:auto;transform:translateX(100%);transition:.2s;z-index:30}
+.sb.open{transform:none}.sb button{display:block;width:100%;text-align:right;background:none;border:0;color:#fff;padding:12px;border-radius:10px}
+.sb button.on,.sb button:hover{background:rgba(255,255,255,.16)}
+.main{padding-bottom:70px}header{display:flex;gap:10px;align-items:center;background:var(--g);color:#fff;padding:12px 14px;position:sticky;top:0;z-index:10}
+header h1{font-size:18px;margin:0;flex:1}header button{background:none;border:0;color:#fff;font-size:22px}
+.pg{padding:14px;max-width:1000px;margin:auto}
+.bn{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--c);border-top:1px solid #d5ddda;z-index:20;padding-bottom:env(safe-area-inset-bottom)}
+.bn button{flex:1;background:none;border:0;padding:9px 2px;font-size:12px;color:var(--m)}.bn button.on{color:var(--g);font-weight:bold}.bn span{display:block;font-size:20px}
+.card{background:var(--c);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid #dde5e2}
+.sub{color:var(--m);font-size:13px;margin-top:3px}.acts{display:flex;gap:6px;flex-wrap:wrap}
+.btn{background:var(--g);color:#fff;border:0;border-radius:10px;padding:10px 14px;min-height:42px}.btn.s{background:var(--g2);color:var(--g)}.btn.d{background:#f8e3e1;color:var(--r)}.btn.y{background:var(--y);color:#222}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.st{background:var(--c);border-radius:14px;padding:14px;border-right:5px solid var(--y)}.st b{font-size:26px;display:block;color:var(--g)}
+input,select{width:100%;padding:11px;border:1px solid #c5d0cc;border-radius:10px;background:#fff;margin-top:4px}
+label{display:block;font-size:13px;color:var(--m);margin-top:10px}
+.mod{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px}
+@media(min-width:700px){.mod{align-items:center}.sheet{border-radius:20px}}
+@media(min-width:900px){.sb{transform:none}.main{margin-right:250px;padding-bottom:0}.bn,header button{display:none}}
+.tag{font-size:12px;border-radius:20px;padding:2px 9px;background:var(--g2);color:var(--g)}.tag.r{background:#fde8c6;color:#7a5200}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;background:#fff;font-size:13px}td,th{border:1px solid #d5ddda;padding:7px;text-align:center}th{background:var(--g2)}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 18px;border-radius:12px;z-index:99}
+.login{max-width:380px;margin:8vh auto;padding:20px}.login h1{color:var(--g)}
+h3{margin:18px 0 8px;color:var(--g)}
+@media print{.sb,.bn,header,.np{display:none!important}.main{margin:0}}
+</style></head><body><div id="app"></div>
+<script>
+var sha256=function a(b){function c(a,b){return a>>>b|a<<32-b}for(var d,e,f=Math.pow,g=f(2,32),h="length",i="",j=[],k=8*b[h],l=a.h=a.h||[],m=a.k=a.k||[],n=m[h],o={},p=2;64>n;p++)if(!o[p]){for(d=0;313>d;d+=p)o[d]=p;l[n]=f(p,.5)*g|0,m[n++]=f(p,1/3)*g|0}for(b+="\x80";b[h]%64-56;)b+="\x00";for(d=0;d<b[h];d++){if(e=b.charCodeAt(d),e>>8)return;j[d>>2]|=e<<(3-d)%4*8}for(j[j[h]]=k/g|0,j[j[h]]=k,e=0;e<j[h];){var q=j.slice(e,e+=16),r=l;for(l=l.slice(0,8),d=0;64>d;d++){var s=q[d-15],t=q[d-2],u=l[0],v=l[4],w=l[7]+(c(v,6)^c(v,11)^c(v,25))+(v&l[5]^~v&l[6])+m[d]+(q[d]=16>d?q[d]:q[d-16]+(c(s,7)^c(s,18)^s>>>3)+q[d-7]+(c(t,17)^c(t,19)^t>>>10)|0);l=[w+((c(u,2)^c(u,13)^c(u,22))+(u&l[1]^u&l[2]^l[1]&l[2]))|0].concat(l),l[4]=l[4]+w|0}for(d=0;8>d;d++)l[d]=l[d]+r[d]|0}for(d=0;8>d;d++)for(e=3;e+1;e--){var x=l[d]>>8*e&255;i+=(16>x?0:"")+x.toString(16)}return i};
+const $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TB=['users','classes','students','bells','schedules','sessions','attendance','grades','activities','logs'];
+let DB;try{DB=JSON.parse(localStorage.getItem('sm')||'null')}catch(e){}
+if(!DB){DB={set:{},seq:1};TB.forEach(t=>DB[t]=[])}
+const save=()=>{try{localStorage.setItem('sm',JSON.stringify(DB))}catch(e){toast('خطا در ذخیره‌سازی')}};
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+const nid=()=>DB.seq++,p2=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())};
+const fa=d=>d?new Date(d+(d.length==10?'T12:00':'')).toLocaleDateString('fa-IR'):'—';
+const hm=iso=>iso?new Date(iso).toTimeString().slice(0,5):'—';
+const mins=(a,b)=>Math.round((b-a)/60000);
+const H=(p,s)=>{let h=p;for(let i=0;i<500;i++)h=sha256(unescape(encodeURIComponent(s+h+p)));return h};
+const rnd=()=>Math.random().toString(36).slice(2)+Date.now().toString(36);
+const toast=m=>{const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)};
+const log=a=>{DB.logs.unshift({id:nid(),uid:S.user?S.user.id:0,at:new Date().toISOString(),a});DB.logs=DB.logs.slice(0,500)};
+let S={user:null,v:'dash',p:null,q:'',menu:0};
+const ACT=[['1','فعال'],['0','غیرفعال']],DAYS=[['6','شنبه'],['0','یکشنبه'],['1','دوشنبه'],['2','سه‌شنبه'],['3','چهارشنبه'],['4','پنجشنبه'],['5','جمعه']];
+const ST={planned:'برنامه‌ریزی شده',running:'در حال برگزاری',done:'برگزار شده',cancel:'لغو شده',moved:'جابه‌جا شده'};
+const AT={p:'حاضر',a:'غایب',ex:'غیبت موجه',un:'غیبت غیرموجه'};
+const bdur=b=>{const[a,c]=b.start.split(':'),[d,e]=b.end.split(':');return(d*60+ +e)-(a*60+ +c)};
+const L={users:u=>u.fn+' '+u.ln,classes:c=>c.name,students:s=>s.fn+' '+s.ln,bells:b=>b.name};
+const lab=(t,id)=>{const r=DB[t].find(x=>x.id==id);return r?L[t](r):'—'};
+const cls=id=>DB.classes.find(c=>c.id==id)||{},bell=id=>DB.bells.find(b=>b.id==id)||{};
+const isA=()=>S.user.role=='admin';
+const myC=()=>DB.classes.filter(c=>c.tid==S.user.id).map(c=>c.id);
+function rows(t){const r=DB[t];if(isA())return r;
+ if(t=='classes')return r.filter(c=>c.tid==S.user.id);
+ if(t=='students')return r.filter(s=>myC().includes(s.cid));
+ if(['schedules','sessions','grades','activities'].includes(t))return r.filter(x=>x.tid==S.user.id);
+ return r}
+const E={
+users:{t:'کاربران و معلمان',f:[['fn','نام','text',,1],['ln','نام خانوادگی','text',,1],['un','نام کاربری','text',,1],['pw','رمز عبور','password'],['phone','تلفن','tel'],['email','ایمیل','email'],['role','نقش','select',[['teacher','معلم'],['admin','مدیر']]],['active','وضعیت','select',ACT]],ti:u=>L.users(u),sb:u=>'@'+u.un+' · '+(u.role=='admin'?'مدیر':'معلم')+' · '+(u.active=='1'?'فعال':'غیرفعال')+(u.phone?' · '+u.phone:''),adm:1},
+classes:{t:'کلاس‌ها',f:[['name','نام کلاس','text',,1],['grade','پایه','text'],['field','رشته','text'],['subject','درس','text',,1],['year','سال تحصیلی','text'],['tid','معلم','ref','users',1],['room','محل کلاس','text'],['note','توضیحات','text'],['active','وضعیت','select',ACT]],ti:c=>c.name,sb:c=>c.subject+' · '+lab('users',c.tid)+' · پایه '+(c.grade||'—')+(c.active=='1'?'':' · غیرفعال'),adm:1},
+students:{t:'دانش‌آموزان',f:[['fn','نام','text',,1],['ln','نام خانوادگی','text',,1],['code','کد دانش‌آموزی','text',,1],['phone','تلفن','tel'],['birth','تاریخ تولد','date'],['cid','کلاس','ref','classes',1],['active','وضعیت','select',ACT],['note','توضیحات','text']],ti:s=>L.students(s),sb:s=>'کد '+s.code+' · '+lab('classes',s.cid)+(s.active=='1'?'':' · غیرفعال')},
+bells:{t:'زنگ‌ها',f:[['no','شماره','number',,1],['name','نام','text',,1],['start','شروع','time',,1],['end','پایان','time',,1]],ti:b=>b.name,sb:b=>b.start+' تا '+b.end+' · '+bdur(b)+' دقیقه',adm:1},
+schedules:{t:'برنامه هفتگی',f:[['day','روز','select',DAYS,1],['cid','کلاس','ref','classes',1],['bid','زنگ','ref','bells',1],['room','محل','text'],['note','توضیحات','text']],ti:x=>DAYS.find(d=>d[0]==x.day)[1]+' · '+lab('bells',x.bid),sb:x=>lab('classes',x.cid)+' · '+cls(x.cid).subject+' · '+(bell(x.bid).start||'')+'–'+(bell(x.bid).end||'')+(x.room?' · '+x.room:''),adm:1},
+sessions:{t:'جلسات',f:[['cid','کلاس','ref','classes',1],['date','تاریخ','date',,1],['bid','زنگ','ref','bells',1],['note','توضیحات','text']],ti:x=>lab('classes',x.cid)+' · '+fa(x.date),sb:x=>lab('bells',x.bid)+' ('+(bell(x.bid).start||'')+'–'+(bell(x.bid).end||'')+')'},
+grades:{t:'نمرات',f:[['sid','دانش‌آموز','ref','students',1],['title','عنوان','text',,1],['type','نوع نمره','select',[['class','کلاسی'],['cont','مستمر'],['term','ترم']]],['score','نمره','number',,1],['max','حداکثر','number',,1],['date','تاریخ','date'],['note','توضیحات','text']],ti:g=>lab('students',g.sid)+' · '+g.score+'/'+g.max,sb:g=>g.title+' · '+({class:'کلاسی',cont:'مستمر',term:'ترم'})[g.type]+' · '+fa(g.date)},
+activities:{t:'فعالیت‌ها',f:[['sid','دانش‌آموز','ref','students',1],['title','عنوان','text',,1],['type','نوع','select',['مشارکت','پاسخ به سؤال','تکلیف','ارائه','کار گروهی','فعالیت عملی','پروژه','سایر'].map(x=>[x,x])],['points','امتیاز','number',,1],['date','تاریخ','date'],['note','توضیحات','text']],ti:a=>lab('students',a.sid)+' · '+a.points+' امتیاز',sb:a=>a.title+' · '+a.type+' · '+fa(a.date)}
+};
+const canEdit=t=>isA()||!E[t].adm;
+function before(t,x){
+ if(t=='sessions'||t=='schedules')x.tid=cls(x.cid).tid;
+ if(t=='grades'||t=='activities'){const s=DB.students.find(z=>z.id==x.sid);x.cid=s.cid;x.tid=cls(s.cid).tid}
+ if(t=='sessions'&&!x.status)x.status='planned'}
+function blocked(t,id){
+ if(t=='users'){if(id==S.user.id)return'حساب خودتان را نمی‌توان حذف کرد';if(DB.classes.some(c=>c.tid==id))return'این معلم کلاس دارد. ابتدا کلاس‌ها را به معلم دیگری بدهید'}
+ if(t=='classes'&&(DB.students.some(s=>s.cid==id)||DB.sessions.some(s=>s.cid==id)||DB.schedules.some(s=>s.cid==id)))return'کلاس دانش‌آموز، برنامه یا جلسه دارد. ابتدا آن‌ها را منتقل یا حذف کنید';
+ if(t=='bells'&&(DB.schedules.some(s=>s.bid==id)||DB.sessions.some(s=>s.bid==id)))return'این زنگ در برنامه یا جلسه استفاده شده است'}
+/* ---------- shell ---------- */
+const NAV=[['dash','داشبورد','🏠','at'],['users','کاربران و معلمان','👥','a'],['classes','کلاس‌ها','🏫','at'],['students','دانش‌آموزان','🎓','at'],['bells','زنگ‌ها','🔔','a'],['schedules','برنامه هفتگی','🗓️','at'],['sessions','جلسات و حضور و غیاب','📋','at'],['grades','نمرات','📝','at'],['activities','فعالیت‌ها','⭐','at'],['reports','گزارش‌ها','📊','at'],['backup','پشتیبان‌گیری و تنظیمات','💾','a'],['logs','تاریخچه فعالیت‌ها','🕘','a'],['profile','پروفایل','👤','at']];
+const BN=['dash','sessions','students','reports'];
+const go=(v,p)=>{S.v=v;S.p=p;S.q='';S.menu=0;render();scrollTo(0,0)};
+function render(){
+ if(!S.user)return login();
+ const nv=NAV.filter(n=>n[3].includes(isA()?'a':'t'));
+ const cur=nv.find(n=>n[0]==S.v)||nv[0];
+ $('#app').innerHTML=`<div class=shell><aside class="sb ${S.menu?'open':''}"><div style="padding:10px 12px 14px;font-weight:bold">${esc(DB.set.school||'مدیریت مدرسه')}</div>${nv.map(n=>`<button class="${n[0]==S.v?'on':''}" onclick="go('${n[0]}')">${n[2]} ${n[1]}</button>`).join('')}<button onclick="logout()">🚪 خروج</button></aside>
+ <div class=main><header><button onclick="S.menu=!S.menu;render()">☰</button><h1>${cur[1]}</h1><span style="font-size:13px">${esc(S.user.fn)}</span></header><div class=pg id=pg>${view()}</div></div>
+ <nav class=bn>${BN.map(id=>{const n=nv.find(x=>x[0]==id);return`<button class="${S.v==id?'on':''}" onclick="go('${id}')"><span>${n[2]}</span>${n[1].split(' ')[0]}</button>`}).join('')}<button onclick="S.menu=!S.menu;render()"><span>☰</span>منو</button></nav></div>`}
+function view(){const v=S.v;
+ if(E[v])return listView(v);
+ return({dash,att:attView,reports,backup,logs:logsV,profile,sp:spView}[v]||dash)()}
+/* ---------- auth ---------- */
+function login(){
+ const first=!DB.users.some(u=>u.role=='admin');
+ $('#app').innerHTML=`<div class=login><h1>${first?'ساخت حساب مدیر':'ورود'}</h1><p class=sub>${first?'اولین بار است. مدیر اصلی را بسازید. همهٔ اطلاعات فقط روی همین دستگاه ذخیره می‌شود.':'این برنامه کاملاً آفلاین است.'}</p>
+ ${first?'<label>نام</label><input id=l_fn><label>نام خانوادگی</label><input id=l_ln>':''}
+ <label>نام کاربری</label><input id=l_un autocapitalize=off><label>رمز عبور${first?' (حداقل ۶ نویسه)':''}</label><input id=l_pw type=password>
+ <p id=l_er style="color:var(--r)"></p><button class=btn style="width:100%" onclick="${first?'setup()':'doLogin()'}">${first?'ساخت حساب و ورود':'ورود'}</button></div>`}
+function setup(){const fn=$('#l_fn').value.trim(),ln=$('#l_ln').value.trim(),un=$('#l_un').value.trim().toLowerCase(),pw=$('#l_pw').value;
+ if(!fn||!ln||!un||pw.length<6)return $('#l_er').textContent='همهٔ فیلدها را پر کنید و رمز حداقل ۶ نویسه باشد';
+ const s=rnd();DB.users.push({id:nid(),fn,ln,un,salt:s,ph:H(pw,s),role:'admin',active:'1',created:new Date().toISOString()});save();doLogin()}
+function doLogin(){const un=$('#l_un').value.trim().toLowerCase(),pw=$('#l_pw').value,F=DB.set.fails=DB.set.fails||{},f=F[un]||{n:0};
+ if(f.until>Date.now())return $('#l_er').textContent='ورود موقتاً قفل است. '+Math.ceil((f.until-Date.now())/60000)+' دقیقهٔ دیگر تلاش کنید';
+ const u=DB.users.find(x=>x.un==un);
+ if(!u||H(pw,u.salt)!=u.ph){f.n++;if(f.n>=5){f.until=Date.now()+300000;f.n=0}F[un]=f;save();return $('#l_er').textContent='نام کاربری یا رمز عبور اشتباه است'}
+ if(u.active!='1')return $('#l_er').textContent='این حساب غیرفعال است';
+ delete F[un];S.user=u;S.v='dash';log('ورود به برنامه');save();render()}
+function logout(){log('خروج');save();S.user=null;S.menu=0;render()}
+/* ---------- generic list/form ---------- */
+function opts(f,val){if(f[2]=='ref'){const t=f[3];let r=rows(t);if(t=='users')r=r.filter(u=>u.role=='teacher'&&u.active=='1');if(t=='bells')r=[...r].sort((a,b)=>a.no-b.no);return'<option value="">انتخاب...</option>'+r.map(x=>`<option value="${x.id}" ${x.id==val?'selected':''}>${esc(L[t](x))}</option>`).join('')}
+ return f[3].map(o=>`<option value="${o[0]}" ${o[0]==val?'selected':''}>${o[1]}</option>`).join('')}
+function cards(t){const e=E[t],q=S.q.trim();let r=rows(t);
+ if(q)r=r.filter(x=>(e.ti(x)+' '+e.sb(x)).includes(q));
+ if(t=='schedules')r=[...r].sort((a,b)=>DAYS.findIndex(d=>d[0]==a.day)-DAYS.findIndex(d=>d[0]==b.day)||bell(a.bid).no-bell(b.bid).no);
+ if(t=='sessions'||t=='grades'||t=='activities')r=[...r].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+ if(!r.length)return'<p class=sub style="text-align:center;padding:30px">موردی ثبت نشده است. با دکمهٔ «افزودن» شروع کنید.</p>';
+ return r.map(x=>`<div class=card><div><b>${esc(e.ti(x))}</b><div class=sub>${esc(e.sb(x))}</div>${t=='sessions'?sessInfo(x):''}</div><div class=acts>${t=='sessions'?sessActs(x):''}${t=='students'?`<button class="btn s" onclick="go('sp',${x.id})">پروفایل</button>`:''}${canEdit(t)?`<button class="btn s" onclick="openForm('${t}',${x.id})">ویرایش</button><button class="btn d" onclick="del('${t}',${x.id})">حذف</button>`:''}</div></div>`).join('')}
+function listView(t){
+ let h=`<div class="np" style="display:flex;gap:8px"><input placeholder="جستجو..." value="${esc(S.q)}" oninput="S.q=this.value;$('#lst').innerHTML=cards('${t}')">${canEdit(t)?`<button class=btn onclick="openForm('${t}')">＋ افزودن</button>`:''}</div>`;
+ if(t=='sessions')h+=`<div style="margin:10px 0"><button class="btn y" onclick="genToday()">ایجاد جلسات امروز از برنامه هفتگی</button></div>`;
+ if(t=='grades'){const a=avg(rows('grades'));h+=`<div class=st style="margin:10px 0">میانگین کل: <b>${a}</b></div>`}
+ return h+`<div id=lst style="margin-top:12px">${cards(t)}</div>`}
+function openForm(t,id){const e=E[t],r=id?DB[t].find(x=>x.id==id):{};
+ const fs=e.f.map(f=>{let v=r[f[0]];if(v==null)v=f[2]=='date'?today():f[0]=='max'?20:f[0]=='active'?'1':f[0]=='role'?'teacher':'';
+  const inp=f[2]=='ref'||f[2]=='select'?`<select id=f_${f[0]}>${opts(f,v)}</select>`:`<input id=f_${f[0]} type="${f[2]}" ${f[2]=='number'?'step=any inputmode=decimal':''} value="${f[2]=='password'?'':esc(v)}">`;
+  return`<label>${f[1]}${f[4]?' *':''}${f[2]=='password'&&id?' (برای عدم تغییر خالی بگذارید)':''}${f[2]=='password'&&!id?' * (حداقل ۶ نویسه)':''}</label>${inp}`}).join('');
+ modal(`<h3>${id?'ویرایش':'افزودن'} — ${e.t}</h3>${fs}<p id=f_er style="color:var(--r)"></p><div class=acts><button class=btn onclick="saveF('${t}',${id||0})">ذخیره</button><button class="btn s" onclick="closeM()">انصراف</button></div>`)}
+function saveF(t,id){const e=E[t],x=id?{...DB[t].find(r=>r.id==id)}:{id:nid(),created:new Date().toISOString()};
+ for(const f of e.f){let v=$('#f_'+f[0]).value.trim();
+  if(f[4]&&!v)return $('#f_er').textContent='فیلد «'+f[1]+'» الزامی است';
+  if(f[2]=='number'&&v!==''){v=parseFloat(v);if(isNaN(v))return $('#f_er').textContent='عدد معتبر وارد کنید'}
+  if(f[2]=='ref')v=v?+v:'';
+  if(f[0]!='pw')x[f[0]]=v;else if(v){if(v.length<6)return $('#f_er').textContent='رمز حداقل ۶ نویسه باشد';x.salt=rnd();x.ph=H(v,x.salt)}}
+ if(t=='users'){x.un=x.un.toLowerCase();if(!x.ph)return $('#f_er').textContent='رمز عبور را وارد کنید';if(DB.users.some(u=>u.un==x.un&&u.id!=x.id))return $('#f_er').textContent='این نام کاربری قبلاً استفاده شده';
+  if(x.id==S.user.id&&(x.active!='1'||x.role!='admin'))return $('#f_er').textContent='نقش یا وضعیت حساب خودتان را نمی‌توان کاهش داد'}
+ if(t=='students'&&DB.students.some(s=>s.code==x.code&&s.id!=x.id))return $('#f_er').textContent='این کد دانش‌آموزی تکراری است';
+ if(t=='bells'&&bdur(x)<=0)return $('#f_er').textContent='ساعت پایان باید بعد از شروع باشد';
+ if(t=='grades'&&(x.score<0||x.score>x.max))return $('#f_er').textContent='نمره باید بین صفر و حداکثر باشد';
+ before(t,x);
+ if(id){const i=DB[t].findIndex(r=>r.id==id);DB[t][i]=x;if(t=='users'&&x.id==S.user.id)S.user=x;if(t=='students'){DB.grades.concat(DB.activities).filter(r=>r.sid==x.id).forEach(r=>{r.cid=x.cid;r.tid=cls(x.cid).tid})}}else DB[t].push(x);
+ log((id?'ویرایش ':'افزودن ')+E[t].t+': '+e.ti(x));save();closeM();render();toast('ذخیره شد')}
+function del(t,id){const b=blocked(t,id);if(b)return alert(b);
+ if(!confirm('این مورد حذف شود؟ این کار قابل بازگشت نیست.'))return;
+ if(t=='students')['attendance','grades','activities'].forEach(k=>DB[k]=DB[k].filter(r=>(k=='attendance'?r.stid:r.sid)!=id));
+ if(t=='sessions')DB.attendance=DB.attendance.filter(r=>r.sess!=id);
+ log('حذف '+E[t].t);DB[t]=DB[t].filter(r=>r.id!=id);save();render()}
+function modal(h){closeM();const d=document.createElement('div');d.className='mod';d.id='mod';d.innerHTML='<div class=sheet>'+h+'</div>';d.onclick=e=>{if(e.target==d)closeM()};document.body.appendChild(d)}
+const closeM=()=>{const m=$('#mod');m&&m.remove()};
+/* ---------- sessions ---------- */
+function genToday(){const d=new Date(),dow=String(d.getDay()),td=today();let n=0;
+ rows('schedules').filter(s=>s.day==dow).forEach(s=>{if(!DB.sessions.some(x=>x.cid==s.cid&&x.date==td&&x.bid==s.bid)){const x={id:nid(),cid:s.cid,date:td,bid:s.bid,note:'',status:'planned'};before('sessions',x);DB.sessions.push(x);n++}});
+ log('ایجاد جلسات امروز: '+n);save();render();toast(n?n+' جلسه ساخته شد':'جلسهٔ جدیدی برای امروز نیست')}
+function sessInfo(x){const d=x.delay;let s=`<div class=sub><span class="tag ${x.status=='running'?'r':''}">${ST[x.status]}</span>`;
+ if(x.as)s+=` شروع ${hm(x.as)} · ${d>0?'تأخیر '+d+' دقیقه':d<0?'زود شروع '+(-d)+' دقیقه':'به‌موقع'}`;
+ if(x.ae)s+=` · پایان ${hm(x.ae)} · مدت ${x.dur} دقیقه · ${x.endDiff>0?x.endDiff+' دقیقه دیرتر پایان':x.endDiff<0?(-x.endDiff)+' دقیقه زودتر پایان':'پایان به‌موقع'}`;
+ if(x.status=='running')s+=` · <b class=tm data-s="${x.as}"></b>`;return s+'</div>'}
+function sessActs(x){let h='';
+ if(x.status=='planned')h+=`<button class=btn onclick="startS(${x.id})">شروع کلاس</button><button class="btn s" onclick="setSt(${x.id},'moved')">جابه‌جا شد</button><button class="btn d" onclick="setSt(${x.id},'cancel')">لغو</button>`;
+ if(x.status=='running')h+=`<button class="btn y" onclick="endS(${x.id})">پایان کلاس</button>`;
+ if(x.status=='running'||x.status=='done'||x.status=='planned')h+=`<button class="btn s" onclick="go('att',${x.id})">حضور و غیاب</button>`;return h}
+function startS(id){const x=DB.sessions.find(s=>s.id==id),now=new Date(),pl=new Date(x.date+'T'+bell(x.bid).start);
+ x.status='running';x.as=now.toISOString();x.delay=mins(pl,now);log('شروع کلاس: '+lab('classes',x.cid));save();render()}
+function endS(id){const x=DB.sessions.find(s=>s.id==id),now=new Date(),pe=new Date(x.date+'T'+bell(x.bid).end);
+ if(!confirm('کلاس پایان یابد؟'))return;x.status='done';x.ae=now.toISOString();x.dur=mins(new Date(x.as),now);x.endDiff=mins(pe,now);log('پایان کلاس: '+lab('classes',x.cid));save();render()}
+function setSt(id,s){DB.sessions.find(x=>x.id==id).status=s;log('تغییر وضعیت جلسه');save();render()}
+setInterval(()=>{document.querySelectorAll('.tm').forEach(e=>{const s=Math.max(0,Math.floor((Date.now()-new Date(e.dataset.s))/1000));e.textContent='⏱ '+p2(Math.floor(s/3600))+':'+p2(Math.floor(s/60)%60)+':'+p2(s%60)});const c=$('#clk');if(c)c.textContent=new Date().toLocaleTimeString('fa-IR')},1000);
+/* ---------- attendance ---------- */
+function attView(){const s=DB.sessions.find(x=>x.id==S.p);if(!s)return'';
+ const st=DB.students.filter(x=>x.cid==s.cid&&x.active!='0');
+ return`<div class=card><div><b>${lab('classes',s.cid)}</b><div class=sub>${fa(s.date)} · ${lab('bells',s.bid)}</div></div><div class=acts><button class="btn y" onclick="document.querySelectorAll('.as').forEach(e=>e.value='p')">همه حاضر</button></div></div>`+
+ (st.length?st.map(z=>{const a=DB.attendance.find(r=>r.sess==s.id&&r.stid==z.id)||{};
+  return`<div class=card style="display:block"><b>${esc(L.students(z))}</b><select class=as data-id=${z.id} style="margin-bottom:6px"><option value="">ثبت نشده</option>${Object.keys(AT).map(k=>`<option value=${k} ${a.status==k?'selected':''}>${AT[k]}</option>`).join('')}</select><input class=rs data-id=${z.id} placeholder="دلیل / توضیحات غیبت" value="${esc(a.reason||'')}"></div>`}).join(''):'<p class=sub>این کلاس دانش‌آموز فعالی ندارد.</p>')+
+ `<button class=btn style="width:100%" onclick="saveAtt(${s.id})">ذخیره حضور و غیاب</button> <button class="btn s" style="width:100%;margin-top:8px" onclick="go('sessions')">بازگشت</button>`}
+function saveAtt(id){document.querySelectorAll('.as').forEach(e=>{const stid=+e.dataset.id,rs=document.querySelector('.rs[data-id="'+stid+'"]').value.trim();let r=DB.attendance.find(a=>a.sess==id&&a.stid==stid);
+ if(!e.value){DB.attendance=DB.attendance.filter(a=>a!==r);return}
+ if(!r){r={id:nid(),sess:id,stid};DB.attendance.push(r)}r.status=e.value;r.reason=e.value=='p'?'':rs});
+ log('ثبت حضور و غیاب');save();toast('ذخیره شد')}
+/* ---------- calculations ---------- */
+const pct=g=>g.score/g.max*100;
+const avg=r=>r.length?(r.reduce((s,g)=>s+pct(g),0)/r.length).toFixed(1)+'٪':'—';
+/* ---------- dashboard ---------- */
+function dash(){const td=today(),ss=rows('sessions'),ts=ss.filter(s=>s.date==td),run=ss.filter(s=>s.status=='running'),ids=ts.map(s=>s.id),at=DB.attendance.filter(a=>ids.includes(a.sess));
+ const nowM=new Date().toTimeString().slice(0,5),nx=ts.filter(s=>s.status=='planned'&&bell(s.bid).start>nowM).sort((a,b)=>bell(a.bid).start.localeCompare(bell(b.bid).start))[0];
+ const hrs=(ss.reduce((s,x)=>s+(x.dur||0),0)/60).toFixed(1);
+ const c=(n,l)=>`<div class=st><b>${n}</b>${l}</div>`;
+ let h=`<div class=grid>${isA()?c(DB.users.filter(u=>u.role=='teacher').length,'معلم'):''}${c(rows('classes').length,'کلاس')}${c(rows('students').length,'دانش‌آموز')}${c(ts.length,'جلسهٔ امروز')}${c(run.length,'در حال برگزاری')}${c(at.filter(a=>a.status=='p').length+' / '+at.filter(a=>a.status!='p').length,'حاضر / غایب امروز')}${isA()?'':c(hrs,'ساعت تدریس')}</div>
+ <div class=st style="margin-bottom:12px">${fa(td)} · <b id=clk style="display:inline;font-size:18px">${new Date().toLocaleTimeString('fa-IR')}</b>${nx?`<div class=sub>کلاس بعدی: ${lab('classes',nx.cid)} ساعت ${bell(nx.bid).start}</div>`:''}</div>
+ <button class="btn y" onclick="genToday()">ایجاد جلسات امروز از برنامه هفتگی</button><h3>کلاس‌های امروز</h3>`+(ts.length?ts.map(x=>`<div class=card><div><b>${lab('classes',x.cid)}</b><div class=sub>${bell(x.bid).start}–${bell(x.bid).end}</div>${sessInfo(x)}</div><div class=acts>${sessActs(x)}</div></div>`).join(''):'<p class=sub>امروز جلسه‌ای ثبت نشده است.</p>');
+ if(!isA())h+='<h3>آخرین نمرات</h3>'+[...rows('grades')].reverse().slice(0,5).map(g=>`<div class=card><b>${lab('students',g.sid)}</b><span>${g.title}: ${g.score}/${g.max}</span></div>`).join('');
+ const lg=DB.logs.filter(l=>isA()||l.uid==S.user.id).slice(0,6);
+ return h+'<h3>آخرین فعالیت‌ها</h3>'+(lg.length?lg.map(l=>`<div class=card><span>${esc(l.a)}</span><span class=sub>${new Date(l.at).toLocaleString('fa-IR')}</span></div>`).join(''):'<p class=sub>—</p>')}
+/* ---------- student profile ---------- */
+function spView(){const s=DB.students.find(x=>x.id==S.p);if(!s)return'';
+ const at=DB.attendance.filter(a=>a.stid==s.id),gr=DB.grades.filter(g=>g.sid==s.id),ac=DB.activities.filter(a=>a.sid==s.id),cnt=k=>at.filter(a=>a.status==k).length;
+ const ses=id=>DB.sessions.find(x=>x.id==id)||{};
+ return`<div class=card style="display:block"><b style="font-size:18px">${esc(L.students(s))}</b><div class=sub>کد ${esc(s.code)} · ${lab('classes',s.cid)} · تلفن ${esc(s.phone||'—')} · تولد ${fa(s.birth)}</div><div class=sub>${esc(s.note||'')}</div></div>
+ <div class=grid><div class=st><b>${cnt('p')}</b>حاضر</div><div class=st><b>${cnt('a')+cnt('ex')+cnt('un')}</b>غیبت</div><div class=st><b>${avg(gr)}</b>میانگین نمرات</div><div class=st><b>${ac.reduce((t,a)=>t+a.points,0)}</b>مجموع امتیاز فعالیت</div></div>
+ <h3>غیبت‌ها و دلایل</h3>${at.filter(a=>a.status!='p').map(a=>`<div class=card><span>${fa(ses(a.sess).date)} · ${AT[a.status]}</span><span class=sub>${esc(a.reason||'بدون دلیل')}</span></div>`).join('')||'<p class=sub>غیبتی ثبت نشده.</p>'}
+ <h3>نمرات</h3>${gr.map(g=>`<div class=card><span>${esc(g.title)}</span><span>${g.score}/${g.max}</span></div>`).join('')||'<p class=sub>—</p>'}
+ <h3>فعالیت‌ها</h3>${ac.map(a=>`<div class=card><span>${esc(a.title)} · ${a.type}</span><span>${a.points}</span></div>`).join('')||'<p class=sub>—</p>'}
+ <button class="btn s" onclick="go('students')">بازگشت</button>`}
+/* ---------- reports ---------- */
+function rng(n){const d=new Date(),f=new Date(Date.now()-n*864e5);S.rf.to=today();S.rf.from=f.getFullYear()+'-'+p2(f.getMonth()+1)+'-'+p2(f.getDate());if(n==0)S.rf.from=S.rf.to;render()}
+function reports(){const f=S.rf=S.rf||{from:'',to:'',cid:'',sid:'',tid:''};
+ const sel=(k,t)=>`<select onchange="S.rf.${k}=this.value;$('#rep').innerHTML=repBody()"><option value="">همه</option>${rows(t).filter(x=>t!='users'||x.role=='teacher').map(x=>`<option value=${x.id} ${f[k]==x.id?'selected':''}>${esc(L[t](x))}</option>`).join('')}</select>`;
+ return`<div class=np><div class=acts><button class="btn s" onclick="rng(0)">روز</button><button class="btn s" onclick="rng(7)">هفته</button><button class="btn s" onclick="rng(30)">ماه</button><button class="btn s" onclick="rng(365)">سال</button><button class="btn s" onclick="S.rf={from:'',to:'',cid:'',sid:'',tid:''};render()">همه</button><button class=btn onclick="print()">چاپ / PDF</button></div>
+ <label>از تاریخ</label><input type=date value="${f.from}" onchange="S.rf.from=this.value;$('#rep').innerHTML=repBody()"><label>تا تاریخ</label><input type=date value="${f.to}" onchange="S.rf.to=this.value;$('#rep').innerHTML=repBody()">
+ <label>کلاس</label>${sel('cid','classes')}<label>دانش‌آموز</label>${sel('sid','students')}${isA()?'<label>معلم</label>'+sel('tid','users'):''}</div><div id=rep>${repBody()}</div>`}
+const tb=(h,r)=>`<div class=tw><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${r.map(x=>`<tr>${x.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')||`<tr><td colspan=${h.length}>داده‌ای نیست</td></tr>`}</table></div>`;
+function repBody(){const f=S.rf,inR=d=>(!f.from||d>=f.from)&&(!f.to||d<=f.to);
+ const ses=rows('sessions').filter(s=>inR(s.date)&&(!f.cid||s.cid==f.cid)&&(!f.tid||s.tid==f.tid)),sid=ses.map(s=>s.id);
+ const stu=rows('students').filter(s=>(!f.cid||s.cid==f.cid)&&(!f.sid||s.id==f.sid)&&(!f.tid||cls(s.cid).tid==f.tid));
+ const at=DB.attendance.filter(a=>sid.includes(a.sess)),gr=rows('grades').filter(g=>inR(g.date||'')&&stu.some(s=>s.id==g.sid)),ac=rows('activities').filter(g=>inR(g.date||'')&&stu.some(s=>s.id==g.sid));
+ const dn=ses.filter(s=>s.dur!=null),late=ses.filter(s=>s.delay>0);
+ const gt=(id,k)=>avg(gr.filter(g=>g.sid==id&&(!k||g.type==k)));
+ return`<h3>حضور و غیاب و غیبت</h3>`+tb(['دانش‌آموز','حاضر','غایب','موجه','غیرموجه'],stu.map(s=>{const a=at.filter(x=>x.stid==s.id),c=k=>a.filter(x=>x.status==k).length;return[esc(L.students(s)),c('p'),c('a'),c('ex'),c('un')]}))+
+ `<h3>نمرات و عملکرد دانش‌آموز</h3>`+tb(['دانش‌آموز','کلاسی','مستمر','ترم','میانگین','امتیاز فعالیت'],stu.map(s=>[esc(L.students(s)),gt(s.id,'class'),gt(s.id,'cont'),gt(s.id,'term'),gt(s.id),ac.filter(a=>a.sid==s.id).reduce((t,a)=>t+a.points,0)]))+
+ `<h3>عملکرد کلاس‌ها</h3>`+tb(['کلاس','دانش‌آموزان','میانگین نمرات','جلسات برگزارشده'],[...new Set(stu.map(s=>s.cid))].map(id=>[esc(lab('classes',id)),stu.filter(s=>s.cid==id).length,avg(gr.filter(g=>g.cid==id)),dn.filter(s=>s.cid==id).length]))+
+ `<h3>ساعات تدریس معلمان</h3>`+tb(['معلم','جلسات','ساعت'],[...new Set(dn.map(s=>s.tid))].map(t=>[esc(lab('users',t)),dn.filter(s=>s.tid==t).length,(dn.filter(s=>s.tid==t).reduce((a,s)=>a+s.dur,0)/60).toFixed(1)]))+
+ `<h3>جلسات و تأخیرها (${late.length} تأخیر)</h3>`+tb(['تاریخ','کلاس','شروع','پایان','مدت','وضعیت','تأخیر'],ses.map(s=>[fa(s.date),esc(lab('classes',s.cid)),hm(s.as),hm(s.ae),s.dur!=null?s.dur+' د':'—',ST[s.status],s.delay!=null?s.delay+' د':'—']))}
+/* ---------- backup / logs / profile ---------- */
+function backup(){return`<div class=card style="display:block"><b>آخرین پشتیبان:</b> ${DB.set.lastBackup?new Date(DB.set.lastBackup).toLocaleString('fa-IR'):'هنوز گرفته نشده'}<p class=sub>فایل پشتیبان فقط روی دستگاه شما ذخیره می‌شود و به هیچ‌جا ارسال نمی‌گردد. مرورگر محل ذخیره را می‌پرسد (حافظه، کارت حافظه، USB). حتماً مرتب پشتیبان بگیرید.</p>
+ <button class=btn onclick="bk()">گرفتن پشتیبان</button></div>
+ <div class=card style="display:block"><b>بازیابی از فایل پشتیبان</b><p class=sub>اطلاعات فعلی با محتوای فایل جایگزین می‌شود.</p><input type=file accept=".json" onchange="rs(this.files[0])"></div>
+ <div class=card style="display:block"><b>تنظیمات مدرسه</b><label>نام مدرسه</label><input id=s_n value="${esc(DB.set.school||'')}"><label>سال تحصیلی جاری</label><input id=s_y value="${esc(DB.set.year||'')}"><br><br><button class=btn onclick="DB.set.school=$('#s_n').value;DB.set.year=$('#s_y').value;save();render();toast('ذخیره شد')">ذخیره</button></div>`}
+function bk(){DB.set.lastBackup=new Date().toISOString();log('گرفتن پشتیبان');save();const b=new Blob([JSON.stringify({app:'sm',v:1,db:DB})],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='school-backup-'+today()+'.json';document.body.appendChild(a);a.click();a.remove();render()}
+function rs(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result);if(j.app!='sm'||!j.db||!j.db.users)throw 0;if(!confirm('همهٔ اطلاعات فعلی با پشتیبان جایگزین شود؟'))return;DB=j.db;save();S.user=null;render();alert('بازیابی انجام شد. دوباره وارد شوید.')}catch(e){alert('فایل پشتیبان معتبر نیست')}};r.readAsText(f)}
+function logsV(){return DB.logs.slice(0,150).map(l=>`<div class=card><span>${esc(l.a)}</span><span class=sub>${esc(lab('users',l.uid))} · ${new Date(l.at).toLocaleString('fa-IR')}</span></div>`).join('')||'<p class=sub>—</p>'}
+function profile(){const u=S.user;
+ return`<div class=card style="display:block;text-align:center">${u.photo?`<img src="${u.photo}" style="width:96px;height:96px;border-radius:50%;object-fit:cover">`:'<div style="font-size:56px">👤</div>'}<div><b>${esc(L.users(u))}</b><div class=sub>@${esc(u.un)} · ${u.role=='admin'?'مدیر':'معلم'} · از ${fa((u.created||'').slice(0,10))}</div></div><label>تغییر عکس</label><input type=file accept="image/*" onchange="ph(this.files[0])"></div>
+ <div class=card style="display:block"><label>نام</label><input id=p_fn value="${esc(u.fn)}"><label>نام خانوادگی</label><input id=p_ln value="${esc(u.ln)}"><label>تلفن</label><input id=p_ph value="${esc(u.phone||'')}"><label>ایمیل</label><input id=p_em value="${esc(u.email||'')}"><br><br><button class=btn onclick="sp2()">ذخیره پروفایل</button></div>
+ <div class=card style="display:block"><b>تغییر رمز عبور</b><label>رمز فعلی</label><input id=o_pw type=password><label>رمز جدید (حداقل ۶ نویسه)</label><input id=n_pw type=password><br><br><button class=btn onclick="cp()">تغییر رمز</button></div>`}
+function sp2(){const u=S.user;if(!$('#p_fn').value.trim()||!$('#p_ln').value.trim())return toast('نام و نام خانوادگی الزامی است');u.fn=$('#p_fn').value.trim();u.ln=$('#p_ln').value.trim();u.phone=$('#p_ph').value.trim();u.email=$('#p_em').value.trim();log('ویرایش پروفایل');save();render();toast('ذخیره شد')}
+function cp(){const u=S.user,n=$('#n_pw').value;if(H($('#o_pw').value,u.salt)!=u.ph)return toast('رمز فعلی اشتباه است');if(n.length<6)return toast('رمز جدید کوتاه است');u.salt=rnd();u.ph=H(n,u.salt);log('تغییر رمز عبور');save();toast('رمز تغییر کرد');render()}
+function ph(f){if(!f)return;const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),s=Math.min(1,240/Math.max(im.width,im.height));c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);S.user.photo=c.toDataURL('image/jpeg',.8);log('تغییر عکس پروفایل');save();render()};im.src=URL.createObjectURL(f)}
+render();
+</script></body></html>
